@@ -1,6 +1,7 @@
 use std::{env, fs, path::Path};
 
 mod lexer;
+mod decoder;
 mod assembler;
 
 fn main() -> std::io::Result<()> {
@@ -16,8 +17,11 @@ fn main() -> std::io::Result<()> {
     let tokens: Vec<String> = lexer::read_file(file_name);
     println!("{:#?}", tokens);
 
+    let decoded_tokens: Vec<String> = decoder::decode(tokens);
+    println!("{:#?}", decoded_tokens);
+
     println!("\nAssembled file: ");
-    let assembled = assembler::assemble(tokens);
+    let assembled = assembler::assemble(decoded_tokens);
     println!("{:#?}", assembled);
 
     let file_path = Path::new(file_name).with_extension("hack");
